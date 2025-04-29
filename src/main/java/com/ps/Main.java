@@ -147,7 +147,7 @@ public class Main {
             return;
         }
 
-        amount = Math.abs(amount);
+        amount = -Math.abs(amount);
         System.out.print("Enter a description for this deposit: ");
         String description = scanner.nextLine();
         System.out.println("Enter the vendor name: ");
@@ -201,7 +201,7 @@ public class Main {
     }
 
     private static void displayAll() {
-        System.out.println("---All Transaction (Newest to oldest)---\n");
+        System.out.println("---All Transaction (Newest)---\n");
         for (int i = history.size() - 1; i >= 0; i--){
             System.out.println(history.get(i));
         }
@@ -292,22 +292,44 @@ public class Main {
         System.out.println("---Year To Date---\n");
         int currentYear = LocalDate.now().getYear();
 
-        for (int i = )
+        for (int i = history.size() - 1; i >= 0; i--) {
+            Transaction t = history.get(i);
+            if (t.getDate().getYear() == currentYear) {
+                System.out.println(t);
+            }
+        }
     }
 
     private static void previousYear() {
+        System.out.println("--- Previous Year---\n");
+        int lastYear = LocalDate.now().getYear() -1;
+
+        for (int i = history.size() - 1;  i >= 0; i--) {
+            Transaction t = history.get(i);
+            if (t.getDate().getYear() == lastYear) {
+                System.out.println(t);
+            }
+        }
     }
 
     private static void searchByVendor() {
+        System.out.println("---Search By Vendor---\n");
+        System.out.println("Enter vendor name to search: ");
+        String vendorSearch = scanner.nextLine();
+
+        boolean found = false;
+        for (int i = history.size() -1; i >= 0; i--) {
+            Transaction t = history.get(i);
+            if (t.getVendor().contains(vendorSearch)) {
+                System.out.println(t);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No transaction found for vendor: " + vendorSearch);
+        }
     }
 
 
 }
-//        System.out.println("---Ledger---");
-//        if (history.isEmpty()) {
-//            System.out.println("No transaction has been made");
-//            return;
-//        }
-//        for (Transaction t : history) {
-//            System.out.println(t);
-//        }
