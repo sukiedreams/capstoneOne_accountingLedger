@@ -66,6 +66,7 @@ public class Main {
                 Transaction transaction = new Transaction(date, time, description, vendor, amount);
 
                 history.add(transaction);
+
             }
 
             bufferedReader.close();
@@ -131,7 +132,7 @@ public class Main {
         String date = LocalDate.now().toString();
         String time = LocalTime.now().withNano(0).toString();
 
-        Transaction transaction= new Transaction(date, time, description, vendor, amount);
+        Transaction transaction = new Transaction(date, time, description, vendor, amount);
         saveTransaction(transaction);
         System.out.println("You have deposited $" + amount);
     }
@@ -268,9 +269,9 @@ public class Main {
         LocalDate today = LocalDate.now();
 
         for (int i = history.size() - 1; i >= 0; i--) {
-            Transaction t = history.get(i);
-            if (t.getDate().getMonth() == today.getMonth() && t.getDate().getYear() == today.getYear()) {
-                System.out.println(t);
+            Transaction transaction = history.get(i);
+            if (transaction.getDate().getMonth() == today.getMonth() && transaction.getDate().getYear() == today.getYear()) {
+                System.out.println(transaction);
             }
         }
     }
@@ -280,10 +281,10 @@ public class Main {
         YearMonth previousMonth = YearMonth.now().minusMonths(1);
 
         for (int i = history.size() - 1; i >= 0; i--) {
-            Transaction t = history.get(i);
-            YearMonth transactionMonth = YearMonth.from(t.getDate());
+            Transaction transaction = history.get(i);
+            YearMonth transactionMonth = YearMonth.from(transaction.getDate());
             if (transactionMonth.equals(previousMonth)) {
-                System.out.println(t);
+                System.out.println(transaction);
             }
         }
     }
@@ -293,9 +294,9 @@ public class Main {
         int currentYear = LocalDate.now().getYear();
 
         for (int i = history.size() - 1; i >= 0; i--) {
-            Transaction t = history.get(i);
-            if (t.getDate().getYear() == currentYear) {
-                System.out.println(t);
+            Transaction transaction = history.get(i);
+            if (transaction.getDate().getYear() == currentYear) {
+                System.out.println(transaction);
             }
         }
     }
@@ -305,9 +306,9 @@ public class Main {
         int lastYear = LocalDate.now().getYear() -1;
 
         for (int i = history.size() - 1;  i >= 0; i--) {
-            Transaction t = history.get(i);
-            if (t.getDate().getYear() == lastYear) {
-                System.out.println(t);
+            Transaction transaction = history.get(i);
+            if (transaction.getDate().getYear() == lastYear) {
+                System.out.println(transaction);
             }
         }
     }
@@ -315,13 +316,13 @@ public class Main {
     private static void searchByVendor() {
         System.out.println("---Search By Vendor---\n");
         System.out.println("Enter vendor name to search: ");
-        String vendorSearch = scanner.nextLine();
+        String vendorSearch = scanner.nextLine().trim().toLowerCase();
 
         boolean found = false;
         for (int i = history.size() -1; i >= 0; i--) {
-            Transaction t = history.get(i);
-            if (t.getVendor().contains(vendorSearch)) {
-                System.out.println(t);
+            Transaction transaction = history.get(i);
+            if (transaction.getVendor().trim().toLowerCase().contains(vendorSearch.toLowerCase())) {
+                System.out.println(transaction);
                 found = true;
             }
         }
